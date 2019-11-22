@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CNJokes</string>
+    <string name="label_attention">Atenção</string>
+    <string name="activity_category_list_title">Categories</string>
 </resources>

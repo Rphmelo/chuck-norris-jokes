@@ -3,9 +3,16 @@ package com.rphmelo.cnjokes.di.modules
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.rphmelo.cnjokes.jokes.data.repository.JokesRepository
+import com.rphmelo.cnjokes.jokes.data.repository.JokesService
+import com.rphmelo.cnjokes.jokes.domain.interactor.CategoryListInteractor
+import com.rphmelo.cnjokes.jokes.domain.interactor.CategoryListInteractorContract
+import com.rphmelo.cnjokes.jokes.presentation.presenter.CategoryListPresenter
+import com.rphmelo.cnjokes.jokes.presentation.presenter.CategoryListPresenterContract
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
+import retrofit2.Retrofit
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -41,5 +48,35 @@ class AppModule {
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
+    }
+
+    @Provides
+    @Singleton
+    fun provideJokesService(retrofit: Retrofit): JokesService {
+        return retrofit.create(JokesService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideJokesRepository(
+        jokesService: JokesService
+    ): JokesRepository {
+        return JokesRepository(jokesService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCategoryListInteractor(
+        jokesRepository: JokesRepository
+    ): CategoryListInteractorContract {
+        return CategoryListInteractor(jokesRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCategoryListPresenter(
+        categoryListInteractor: CategoryListInteractor
+    ): CategoryListPresenterContract {
+        return CategoryListPresenter(categoryListInteractor)
     }
 }
