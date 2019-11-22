@@ -1,33 +1,32 @@
 package com.rphmelo.cnjokes.jokes.domain.interactor
 
 import com.rphmelo.cnjokes.jokes.data.repository.JokesRepository
-import com.rphmelo.cnjokes.jokes.presentation.presenter.CategoryListPresenterContract
+import com.rphmelo.cnjokes.jokes.domain.model.JokeResponse
+import com.rphmelo.cnjokes.jokes.presentation.presenter.RandomJokePresenterContract
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class CategoryListInteractor @Inject constructor(
+class RandomJokeInteractor @Inject constructor(
     private var jokesRepository: JokesRepository
-) : CategoryListInteractorContract {
+) : RandomJokeInteractorContract {
 
-    private lateinit var categoryListPresenter: CategoryListPresenterContract
+    private lateinit var randomJokePresenter: RandomJokePresenterContract
 
     private var disposable: Disposable? = null
 
-    override fun attachPresenter(presenter: CategoryListPresenterContract) {
-        categoryListPresenter = presenter
+    override fun attachPresenter(presenter: RandomJokePresenterContract) {
+        randomJokePresenter = presenter
     }
 
-    override fun getCategories() {
-        jokesRepository.getCategories()
+    override fun getRandomJoke(category: String) {
+        jokesRepository.getCategoryRandomJoke(category)
             .subscribeOn(Schedulers.io())
             .unsubscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object: Observer<List<String>> {
+            .subscribe(object: Observer<JokeResponse> {
                 override fun onComplete() {
 
                 }
@@ -36,8 +35,8 @@ class CategoryListInteractor @Inject constructor(
                     disposable = d
                 }
 
-                override fun onNext(categoryList: List<String>) {
-                    categoryListPresenter.fillCategoryList(categoryList)
+                override fun onNext(jokeResponse: JokeResponse) {
+                    randomJokePresenter.fillRandomJoke(jokeResponse)
                 }
 
                 override fun onError(e: Throwable) {
@@ -49,7 +48,7 @@ class CategoryListInteractor @Inject constructor(
                         message = it
                     }
 
-                    categoryListPresenter.showErrorMessage(message)
+                    randomJokePresenter.showErrorMessage(message)
                 }
             })
     }
@@ -57,5 +56,4 @@ class CategoryListInteractor @Inject constructor(
     override fun disposeObservable() {
         disposable?.dispose()
     }
-
 }

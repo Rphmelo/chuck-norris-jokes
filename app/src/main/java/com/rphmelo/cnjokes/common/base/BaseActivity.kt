@@ -2,9 +2,11 @@ package com.rphmelo.cnjokes.common.base
 
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import com.rphmelo.cnjokes.common.helper.DialogHelper
+import com.rphmelo.cnjokes.jokes.presentation.ui.ChuckLoading
 import dagger.android.AndroidInjection
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity(), BaseViewContract {
 
     protected fun displayToolbarHomeButton() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -25,5 +27,17 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected fun configureDagger() {
         AndroidInjection.inject(this)
+    }
+
+    override fun startLoading() {
+        ChuckLoading.show(this)
+    }
+
+    override fun stopLoading() {
+        ChuckLoading.dismiss()
+    }
+
+    override fun showErrorMessage(message: String) {
+        DialogHelper.showMessageDialog(this, message)
     }
 }

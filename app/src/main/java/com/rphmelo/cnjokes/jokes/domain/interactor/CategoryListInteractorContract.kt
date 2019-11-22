@@ -1,9 +1,9 @@
 package com.rphmelo.cnjokes.jokes.domain.interactor
 
+import com.rphmelo.cnjokes.common.base.BaseInteractorContract
 import com.rphmelo.cnjokes.jokes.presentation.presenter.CategoryListPresenterContract
 
-interface CategoryListInteractorContract {
+interface CategoryListInteractorContract : BaseInteractorContract{
     fun getCategories()
-    fun disposeObservable()
     fun attachPresenter(presenter: CategoryListPresenterContract)
 }

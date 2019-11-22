@@ -24,17 +24,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/view_item_category_list"/>
 
-        <ProgressBar
-                android:id="@+id/progress_bar_category_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:indeterminateTint="@color/gray"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
