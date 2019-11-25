@@ -25,7 +25,7 @@ class CategoryListActivity : BaseActivity(), CategoryListViewContract {
         configureDagger()
 
         categoryListPresenter.attachView(this)
-
+        setTitleToolbar(getString(R.string.activity_category_list_title))
         setupRecyclerView()
     }
 

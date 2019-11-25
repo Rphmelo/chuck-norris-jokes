@@ -13,13 +13,11 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-            android:label="@string/activity_random_joke_title"
             android:screenOrientation="portrait"
             android:name=".jokes.presentation.ui.activity.RandomJokeActivity"/>
 
         <activity
                 android:name=".jokes.presentation.ui.activity.CategoryListActivity"
-                android:label="@string/activity_category_list_title"
                 android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
